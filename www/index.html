@@ -1,0 +1,646 @@
+<html>
+    <head>
+        <title>cauviry</title>
+        <link rel='stylesheet' type='text/css' href='css/fontload.css'>
+        <script src='js/jq.js'></script>
+        <script src='js/vm.js'></script>
+        <script src='cordova.js'></script>
+		<meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+        <meta charset="utf-8" />
+        <style>
+            *  {
+                cursor: default;
+                user-select: none;
+            }
+            ::-webkit-scrollbar  {
+                width: 4px;
+            }
+            ::-webkit-scrollbar-track  {
+                background: rgba(0, 140, 255, 0.3);
+                border-radius: 100px;
+            }
+            ::-webkit-scrollbar-track:hover  {
+                background: rgba(0, 140, 255, 0.3);
+            }
+            ::-webkit-scrollbar-thumb  {
+                background: rgba(0, 140, 255, 0.8);
+                border-radius: 100px;
+            }
+            ::-webkit-scrollbar-thumb:hover  {
+                background: rgb(0, 0, 0);
+            }
+            ::-webkit-scrollbar-corner  {
+                opacity: 0;
+                border-radius: 100px;
+            }
+
+            div  {
+                position: absolute;
+            }
+
+            .rb  {
+                background: #008cff;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+                font-family: common;
+                text-align: center;
+                color: black;
+            }
+        </style>
+    </head>
+    <body style='background: rgb(0, 0, 0); overflow: hidden;'>
+        <div id='main' style='top: 0; left: 0; height: 100vh; width: 100vw; overflow: hidden; background: rgb(0, 0, 0);'>
+            <div id='logo' style='height: 100%; width: 150%; top: 0; left: -25%; z-index: 2; background: rgb(0, 0, 0);'>
+                <div id='logo0' style='height: 100%; width: 100%; top: 0; left: 0; z-index: 2; background: rgb(0, 0, 0);'>
+
+                	<div style='height: 4vh; overflow: visible; left: calc(50% - 21.34vh); top: 30%; width: 25vh; transform: rotate(-45deg);'>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 0; transform: rotate(45deg);'>c</div>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 8vh; transform: rotate(45deg);'>a</div>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 16vh; transform: rotate(45deg);'>u</div>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 25vh; transform: rotate(45deg);'>v</div>
+                	</div>
+                	<div style='height: 4vh; overflow: visible; left: calc(50% - 3.66vh); top: 30%; width: 25vh; transform: rotate(45deg);'>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 0; transform: rotate(-45deg);'></div>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 8vh; transform: rotate(-45deg); background: #008cff; color: black;'>i</div>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 16vh; transform: rotate(-45deg); background: #008cff; color: black;'>r</div>
+                		<div style='height: 4vh; color: #008cff; font-family: logo, monospace; font-size: 4vh; text-align: center; line-height: 4vh; left: 24vh; transform: rotate(-45deg);'>y</div>
+                	</div>
+
+                	<div style='height: 0.2vh; background: #008cff; transform: rotate(-45deg); width: 25vh; left: calc(50% - 21.34vh); top: 50%;'></div>
+                	<div style='height: 0.2vh; background: #008cff; transform: rotate(45deg); width: 25vh; left: calc(50% - 3.66vh); top: 50%;'></div>
+                	<div style='height: 0.2vh; background: #008cff; transform: rotate(-45deg); width: 25vh; left: calc(50% - 21.34vh); top: 60%;'></div>
+                	<div style='height: 0.2vh; background: #008cff; transform: rotate(45deg); width: 25vh; left: calc(50% - 3.66vh); top: 60%;'></div>
+                    <!-- Dimensions fixed (vh, vw), not position (%). -->
+                </div>
+            </div>
+            <div id='scanDev' style='height: 7%; width: 70%; left: 15%; top: 150%; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; text-align: center; font-family: common; line-height: 7vh; font-size: 2vh; border-radius: 10px; letter-spacing: 1vh; z-index: 3; color: #008cff;'>SCAN</div>
+            <div id='listDev' style='height: 7%; width: 70%; left: 15%; top: 150%; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; text-align: center; font-family: common; line-height: 7vh; font-size: 2vh; border-radius: 10px; letter-spacing: 1vh; z-index: 3; color: #008cff;'>PAIRED</div>
+            <div id='scanLoader' style='width: 150vw; left: -25vw; height: 15%; top: 150%; box-shadow: 0 0 5vh rgba(0, 140, 255, 1); text-align: center; font-family: common; line-height: 10vh; font-size: 2vh; letter-spacing: 1vh; z-index: 4; color: #008cff;'>SCANNING</div>
+            <div id='pairLoader' style='width: 150vw; left: -25vw; height: 15%; top: 150%; box-shadow: 0 0 5vh rgba(0, 140, 255, 1); text-align: center; font-family: common; line-height: 10vh; font-size: 2vh; letter-spacing: 1vh; z-index: 4; color: #008cff;'>CONNECTING</div>
+
+            <div id='scannedList' style='width: 100%; left: 0; height: 85%; top: 100%; overflow-y: scroll; z-index: 1; overflow-x: hidden;'></div>
+            <div id='pairedList' style='width: 100%; left: 0; height: 85%; top: 100%; overflow-y: scroll; z-index: 1; overflow-x: hidden;'></div>
+
+            <div id='moreOptionsPlatform' style='width: 150vw; left: -25vw; height: 25%; top: 150%; box-shadow: 0 0 5vh rgba(0, 140, 255, 0.8); overflow: hidden; z-index: 5;'>
+                <div id='scanDevInstead' style='height: 7vh; width: 70vw; left: 40vw; top: 103vh; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; text-align: center; font-family: common; line-height: 7vh; font-size: 2vh; border-radius: 10px; letter-spacing: 1vh; color: #008cff;'>SCAN</div>
+
+                <div id='rescanDev' style='height: 7vh; width: 70vw; left: 40vw; top: 103vh; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; text-align: center; font-family: common; line-height: 7vh; font-size: 2vh; border-radius: 10px; letter-spacing: 1vh; color: #008cff;'>RESCAN</div>
+                <div id='listDevInstead' style='height: 7vh; width: 70vw; left: 40vw; top: 113vh; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; text-align: center; font-family: common; line-height: 7vh; font-size: 2vh; border-radius: 10px; letter-spacing: 1vh; color: #008cff;'>PAIRED</div>
+            </div>
+
+            <div id='remote' style="top: 120%; width: 70%; background: #008cff; box-shadow: 0 0 40px rgba(0, 140, 255, 0.7); border-radius: 5vh 5vh 0 0; height: 85%; left: 15%;">
+                <!-- MAIN -->
+                <div id='rbPOW' class='rb' style="top: 4%; width: 40%; height: 5vh; left: 8%; font-size: 2.4vh; line-height: 5vh;  border-radius: 100vh; letter-spacing: 0.7vh;">i/o</div>
+                <div id='rbSRC' class='rb' style="top: 4%; width: 28%; height: 5vh; right: 8%; font-size: 2.4vh; line-height: 5vh; border-radius: 100vh; letter-spacing: 0.7vh;">src</div>
+
+
+                <!-- NAV - NUP NDN NLF NRT NOK (which is quite OK) -->
+                <div id='rbNRT' class='rb' style="top: 20vh; height: 12vh; width: 5vh; left: calc(50% + 7vh); font-size: 2.4vh; line-height: 12vh; border-radius: 2vh 5vh 5vh 2vh; letter-spacing: 0.7vh;">&gt;</div>
+                <div id='rbNUP' class='rb' style="top: 10.5vh; height: 12vh; width: 5vh; left: calc(50% - 2.5vh); font-size: 2.4vh; line-height: 12vh; border-radius: 2vh 5vh 5vh 2vh; letter-spacing: 0.7vh; transform: rotate(-90deg);">&gt;</div>
+                <div id='rbNLT' class='rb' style="top: 20vh; height: 12vh; width: 5vh; left: calc(50% - 12vh); font-size: 2.4vh; line-height: 12vh; border-radius: 5vh 2vh 2vh 5vh; letter-spacing: 0.7vh;">&lt;</div>
+                <div id='rbNDN' class='rb' style="top: 29.5vh; height: 12vh; width: 5vh; left: calc(50% - 2.5vh); font-size: 2.4vh; line-height: 12vh; border-radius: 2vh 5vh 5vh 2vh; letter-spacing: 0.7vh; transform: rotate(90deg);">&gt;</div>
+                <div id='rbNOK' class='rb' style="top: 23.5vh; height: 5vh; width: 7vh; left: calc(50% - 3.5vh); font-size: 2.4vh; line-height: 5vh; border-radius: 500vh; letter-spacing: 0.4vh;">ok</div>
+
+
+                <!-- CHVOL -->
+                <div id='rbCHA' class='rb' style="top: 45vh; height: 5vh; width: 5vh; left: calc(15% - 2.5vh); font-size: 2.4vh; line-height: 5vh; border-radius: 2vh 5vh 5vh 2vh; letter-spacing: 0.7vh; transform: rotate(-90deg);">&gt;</div>
+                <div id='rbCHL' style="top: 51vh; height: 5vh; width: 5vh; left: calc(15% - 2.5vh); font-family: common; font-size: 2.4vh; line-height: 5vh; letter-spacing: 0.4vh;">CH</div>
+                <div id='rbCHB' class='rb' style="top: 57vh; height: 5vh; width: 5vh; left: calc(15% - 2.5vh); font-size: 2.4vh; line-height: 5vh; border-radius: 2vh 5vh 5vh 2vh; letter-spacing: 0.7vh; transform: rotate(90deg);">&gt;</div>
+
+
+                <div id='rbVLA' class='rb' style="top: 45vh; height: 5vh; width: 5vh; left: calc(85% - 2.5vh); font-size: 2.4vh; line-height: 5vh; border-radius: 2vh 5vh 5vh 2vh; letter-spacing: 0.7vh; transform: rotate(-90deg);">&gt;</div>
+                <div id='rbVLL' style="top: 51vh; height: 5vh; width: 5vh; left: calc(85% - 2.5vh); font-family: common; font-size: 2.4vh; line-height: 5vh; letter-spacing: 0.4vh;">VOL</div>
+                <div id='rbVLB' class='rb' style="top: 57vh; height: 5vh; width: 5vh; left: calc(85% - 2.5vh); font-size: 2.4vh; line-height: 5vh; border-radius: 2vh 5vh 5vh 2vh; letter-spacing: 0.7vh; transform: rotate(90deg);">&gt;</div>
+
+                <!-- MENU -->
+
+                <div id='rbMNU' class='rb' style="top: 45vh; width: 40%; height: 4.5vh; left: 30%; font-size: 2.4vh; line-height: 4.5vh; border-radius: 100vh; letter-spacing: 0.7vh; font-variant: petite-caps;">menu</div>
+                <div id='rbBCK' class='rb' style="top: 51.25vh; width: 40%; height: 4.5vh; left: 30%; font-size: 2.4vh; line-height: 4.5vh; border-radius: 100vh; letter-spacing: 0.7vh; font-variant: petite-caps;">back</div>
+                <div id='rbEXT' class='rb' style="top: 57.5vh; width: 40%; height: 4.5vh; left: 30%; font-size: 2.4vh; line-height: 4.5vh; border-radius: 100vh; letter-spacing: 0.7vh; font-variant: petite-caps;">exit</div>
+
+
+                <!-- PLAYBACK -->
+                <div id='rbPLY' class='rb' style="top: 67vh; height: 7vh; width: 7vh; left: calc(50% - 3.5vh); font-size: 3.4vh; line-height: 7vh; border-radius: 50%; letter-spacing: -0.5vh;">▶</div>
+                <div id='rbSTP' class='rb' style="top: 75vh; height: 7vh; width: 7vh; left: calc(50% - 3.5vh); font-size: 3.4vh; line-height: 7vh; border-radius: 50%; letter-spacing: 0;">■</div>
+
+                <div id='rbPFF' class='rb' style="top: 72vh; height: 5vh; width: 5vh; left: calc(50% + 5vh); font-size: 2.4vh; line-height: 5vh; border-radius: 50%; letter-spacing: -0.5vh;">▶▶</div>
+                <div id='rbPRW' class='rb' style="top: 72vh; height: 5vh; width: 5vh; left: calc(50% - 10vh); font-size: 2.4vh; line-height: 5vh; border-radius: 50%; letter-spacing: -0.5vh; transform: rotate(180deg);">▶▶</div>
+                <div id='rbPNX' class='rb' style="top: 72vh; height: 5vh; width: 5vh; left: calc(50% + 11vh); font-size: 2.4vh; line-height: 5vh; border-radius: 50%; letter-spacing: -0.3vh;">▶|</div>
+                <div id='rbPPR' class='rb' style="top: 72vh; height: 5vh; width: 5vh; left: calc(50% - 16vh); font-size: 2.4vh; line-height: 5vh; border-radius: 50%; letter-spacing: -0.3vh; transform: rotate(180deg);">▶|</div>
+            </div>
+
+
+            <div id='discDev' style='height: 7%; width: 70%; left: 15%; top: 150%; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; text-align: center; font-family: common; line-height: 7vh; font-size: 2vh; border-radius: 10px; letter-spacing: 1vh; z-index: 3; color: #008cff;'>DISCONNECT</div>
+        </div>
+
+        <script>
+            var sW = window.innerWidth,
+                sH = window.innerHeight;
+
+            var remoteMode = false;
+
+            var scannedDev = [];
+            var pairedDev = [];
+
+            var codeDict = {
+                '0': '00FF',
+                '1': '807F',
+                '2': '40BF',
+                '3': 'C03F',
+                '4': '20DF',
+                '5': 'A05F',
+                '6': '609F',
+                '7': 'E01F',
+                '8': '10EF',
+                '9': '906F',
+                SOURCE: '28D7', //
+                POWER: '48B7', //
+                MENU: 'DA25', //
+                BACK: '02FD', //
+                OK: '50AF', //
+                UP: '9867', //
+                DOWN: 'B847', //
+                LEFT: '629D', //
+                RIGHT: 'E21D', //
+                'CH+': 'D827', //
+                'CH-': 'F807', //
+                'VOL+': '58A7', //
+                'VOL-': '7887', //
+                MUTE: '08F7',
+                EXIT: '22DD', //
+                USB: '4AB5',
+                PAUSE: 'EA15', //
+                PLAY: 'EA15', //
+                PREVIOUS: '9A65', //
+                NEXT: '6A95', //
+                REWIND: 'F20D', //
+                FF: '728D', //
+                STOP: '708F' //
+            };
+
+            $(document).ready(function()  {
+                document.addEventListener("deviceready", chkload, false); 
+            });
+
+            function chkload()  {
+                bluetoothSerial.isConnected(function()  {
+                    bluetoothSerial.disconnect(function()  {
+                        load();
+                    }, function()  {
+                        alert("Why won't you let me do my thing?\nImma crash ;-;");
+                        if (navigator.app)  {
+                            navigator.app.exitApp();
+                        } else if (navigator.device)  {
+                            navigator.device.exitApp();
+                        } else  {
+                            window.close();
+                        }
+                    });
+                }, function()  {
+                    load();
+                });
+            }
+
+            function load()  {
+                StatusBar.overlaysWebView(false);
+                StatusBar.backgroundColorByHexString("#008cff");
+                StatusBar.styleBlackOpaque();
+                window.screen.orientation.lock('portrait');
+
+                $('#logo').delay(1000).velocity({height: '80%'}, 800, 'easeOutExpo');
+                $('#logo0').delay(1000).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                $('#scanDev').delay(1100).velocity({top: '80%'}, 800, 'easeOutExpo');
+                $('#listDev').delay(1200).velocity({top: '90%'}, 800, 'easeOutExpo');
+
+                $('#scanDev, #listDev, #scanDevInstead, #rescanDev, #listDevInstead').on('touchstart', function()  {
+                    $(this).css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.7)', background: '#008cff', color: 'rgb(0, 0, 0)'});
+                });
+
+                $('.rb').on('touchstart', function()  {
+                    $(this).css({boxShadow: '0 0 0 rgba(0, 0, 0, 0.7)', background: 'black', color: '#008cff'});
+                    bluetoothSerial.isConnected(function()  {}, function()  {
+                        reset();
+                    });
+                });
+
+                $('#discDev').on('touchstart', function()  {
+                    $(this).css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.7)', background: '#008cff', color: 'rgb(0, 0, 0)'});
+                });
+
+                $('#discDev').on('touchend', function()  {
+                    bluetoothSerial.isConnected(function()  {
+                        bluetoothSerial.disconnect(function()  {
+                            reset();
+                        }, function()  {});
+                    }, function()  {
+                        reset();
+                    });
+                });
+
+                $('.rb').on('touchend', function()   {
+                    if(remoteMode)  {
+                        $(this).css({boxShadow: '0 0 20px rgba(0, 0, 0, 0.7)', background: '#008cff', color: 'black'});
+                        sendCode($(this).attr('id'));
+                    }
+                });
+
+                $('#scanDev').on('touchend', function()  {
+                    // $(this).css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                    //you might wonder why. uncomment the above, run and tap the button - don't hold it (a user would tap).
+                    //doesn't feel like a satisfactory button press (no instant change in the surroundings).
+                    $('#listDev').velocity({top: '150%'}, 800, 'easeInExpo');
+                    $('#scanDev').delay(200).velocity({top: '150%'}, 800, 'easeInExpo');
+                    $('#logo').delay(500).velocity({height: '100%'}, 800, 'easeInOutExpo');
+                    $('#logo0').delay(500).velocity({scale: 1}, 800, 'easeInOutExpo', function()  {
+                        $('#scanDev').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                        //and here, because we might bring it back up, if the scan fails or returns nothing.
+                        $('#logo').delay(400).velocity({height: '90%'}, 800, 'easeOutExpo');
+                        $('#logo0').delay(400).velocity({scale: 0.9}, 800, 'easeOutExpo');
+                        $('#scanLoader').delay(600).velocity({top: '90%'}, 800, 'easeOutExpo', function()  {
+                            scanForDev(function()  {
+                                $('#scanLoader').velocity({top: '150%'}, 800, 'easeOutExpo');
+                                $('#logo0').delay(200).velocity({scale: 1}, 800, 'easeOutExpo');
+                                $('#logo').delay(200).velocity({height: '100%'}, 800, 'easeOutExpo', function()  {
+                                    if(scannedDev.length == 0)  {
+                                        toastLong('No devices discovered in the scan.');
+                                        $('#logo').delay(100).velocity({height: '80%'}, 800, 'easeOutExpo');
+                                        $('#logo0').delay(100).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                                        $('#scanDev').delay(200).velocity({top: '80%'}, 800, 'easeOutExpo');
+                                        $('#listDev').delay(300).velocity({top: '90%'}, 800, 'easeOutExpo');
+                                    }  else  {
+                                        //renderlist
+                                        $('#scannedList').html('');
+                                        for(var i = 0; i < scannedDev.length; i++)  {
+                                            tempEl = "<div id='scannedListItem" + i + "' style='width: 80%; height: 6vh; line-height: 6vh; letter-spacing: 1vh; text-align: left; font-size: 2vh; font-family: common; border-radius: 10px; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; left: 10%; top: " + (3 + (i * 10)) + "vh; color: #008cff; overflow: hidden; text-overflow: ellipsis;'>&nbsp;" + scannedDev[i].name + "</div>";
+                                            $('#scannedList').html($('#scannedList').html() + tempEl);
+                                        }
+                                        $('#logo').css({boxShadow: '0 0 3.5vh rgba(0, 140, 255, 0.8)'});
+                                        $('#logo').delay(200).velocity({height: '15%'}, 1400, 'easeOutExpo');
+                                        $('#logo0').delay(200).velocity({scale: 0.3}, 1400, 'easeOutExpo');
+                                        $('#scannedList').delay(200).velocity({top: '15%'}, 1400, 'easeOutExpo', function()  {
+                                            for(var i = 0; i < scannedDev.length; i++)  {
+                                                $('#scannedListItem' + i).on('touchend', function()  {
+                                                    $(this).css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.7)', background: '#008cff', color: 'rgb(0, 0, 0)'});
+                                                    stageOutAndPair('scan', +$(this).attr('id').substr(15));
+                                                });
+                                            }
+                                            $('#scannedList').velocity({height: '62%'}, 800, 'easeOutExpo');
+                                            $('#moreOptionsPlatform').velocity({top: '77%'}, 800, 'easeOutExpo');
+                                            $('#rescanDev').delay(200).velocity({top: '3vh'}, 800, 'easeOutExpo');
+                                            $('#listDevInstead').delay(400).velocity({top: '13vh'}, 800, 'easeOutExpo');
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    });
+                });
+                $('#listDev').on('touchend', function()  {
+                    loadPairedDev(function()  {
+                        if(pairedDev.length != 0)  {
+                            $('#listDev').velocity({top: '150%'}, 800, 'easeInExpo');
+                            $('#scanDev').delay(200).velocity({top: '150%'}, 800, 'easeInExpo');
+                            $('#logo').delay(500).velocity({height: '100%'}, 800, 'easeInOutExpo');
+                            $('#logo0').delay(500).velocity({scale: 1}, 800, 'easeInOutExpo', function()  {
+                                $('#listDev').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                                $('#pairedList').html('');
+                                for(var i = 0; i < pairedDev.length; i++)  {
+                                    tempEl = "<div id='pairedListItem" + i + "' style='width: 80%; height: 6vh; line-height: 6vh; letter-spacing: 1vh; text-align: left; font-size: 2vh; font-family: common; border-radius: 10px; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; left: 10%; top: " + (3 + (i * 10)) + "vh; overflow: hidden; text-overflow: ellipsis; color: #008cff;'>&nbsp;" + pairedDev[i].name + "</div>";
+                                    $('#pairedList').html($('#pairedList').html() + tempEl);
+                                }
+                                $('#logo').css({boxShadow: '0 0 3.5vh rgba(0, 140, 255, 0.8)'});
+                                $('#logo').delay(200).velocity({height: '15%'}, 1400, 'easeOutExpo');
+                                $('#logo0').delay(200).velocity({scale: 0.3}, 1400, 'easeOutExpo');
+                                $('#pairedList').delay(200).velocity({top: '15%'}, 1400, 'easeOutExpo', function()  {
+                                    for(var i = 0; i < pairedDev.length; i++)  {
+                                        $('#pairedListItem' + i).on('touchend', function()  {
+                                            $(this).css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.7)', background: '#008cff', color: 'rgb(0, 0, 0)'});
+                                            stageOutAndPair('list', +$(this).attr('id').substr(14));
+                                        });
+                                    }
+                                    $('#pairedList').velocity({height: '72%'}, 800, 'easeOutExpo');
+                                    $('#moreOptionsPlatform').velocity({top: '87%'}, 800, 'easeOutExpo');
+                                    $('#scanDevInstead').delay(200).velocity({top: '3vh'}, 800, 'easeOutExpo');
+                                });
+                            });
+                        }  else  {
+                            toastLong('No paired devices available.');
+                            $('#listDev').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                        }
+                    });
+                });
+                $('#scanDevInstead').on('touchend', function()  {
+                    $('#scanDevInstead').velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#moreOptionsPlatform').delay(200).velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#pairedList').delay(200).velocity({height: '85%'}, 800, 'easeInExpo');
+                    $('#logo0').delay(800).velocity({scale: 1}, 800, 'easeInOutExpo');
+                    $('#logo').delay(800).velocity({height: '100%'}, 800, 'easeInOutExpo', function()  {
+                        $('#pairedList').css({top: '150vh'});
+                        $('#logo').css({boxShadow: '0 0 0 rgba(0, 140, 255, 0)'});
+                        $('#scanDevInstead').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                        $('#logo').delay(400).velocity({height: '90%'}, 800, 'easeOutExpo');
+                        $('#logo0').delay(400).velocity({scale: 0.9}, 800, 'easeOutExpo');
+                        $('#scanLoader').delay(600).velocity({top: '90%'}, 800, 'easeOutExpo', function()  {
+                            scanForDev(function()  {
+                                $('#scanLoader').velocity({top: '150%'}, 800, 'easeOutExpo');
+                                $('#logo0').delay(200).velocity({scale: 1}, 800, 'easeOutExpo');
+                                $('#logo').delay(200).velocity({height: '100%'}, 800, 'easeOutExpo', function()  {
+                                    if(scannedDev.length == 0)  {
+                                        toastLong('No devices discovered in the scan.');
+                                        $('#logo').delay(100).velocity({height: '80%'}, 800, 'easeOutExpo');
+                                        $('#logo0').delay(100).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                                        $('#scanDev').delay(200).velocity({top: '80%'}, 800, 'easeOutExpo');
+                                        $('#listDev').delay(300).velocity({top: '90%'}, 800, 'easeOutExpo');
+                                    }  else  {
+                                        $('#scannedList').html('');
+                                        for(var i = 0; i < scannedDev.length; i++)  {
+                                            tempEl = "<div id='scannedListItem" + i + "' style='width: 80%; height: 6vh; line-height: 6vh; letter-spacing: 1vh; text-align: left; font-size: 2vh; font-family: common; border-radius: 10px; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; left: 10%; top: " + (3 + (i * 10)) + "vh; color: #008cff; overflow: hidden; text-overflow: ellipsis;'>&nbsp;" + ((scannedDev[i].name)?scannedDev[i].name:scannedDev[i].id) + "</div>";
+                                            $('#scannedList').html($('#scannedList').html() + tempEl);
+                                        }
+                                        $('#logo').css({boxShadow: '0 0 3.5vh rgba(0, 140, 255, 0.8)'});
+                                        $('#logo').delay(200).velocity({height: '15%'}, 1400, 'easeOutExpo');
+                                        $('#logo0').delay(200).velocity({scale: 0.3}, 1400, 'easeOutExpo');
+                                        $('#scannedList').delay(200).velocity({top: '15%'}, 1400, 'easeOutExpo', function()  {
+                                            for(var i = 0; i < scannedDev.length; i++)  {
+                                                $('#scannedListItem' + i).on('touchend', function()  {
+                                                    $(this).css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.7)', background: '#008cff', color: 'rgb(0, 0, 0)'});
+                                                    stageOutAndPair('scan', +$(this).attr('id').substr(15));
+                                                });
+                                            }
+                                            $('#scannedList').velocity({height: '62%'}, 800, 'easeOutExpo');
+                                            $('#moreOptionsPlatform').velocity({top: '77%'}, 800, 'easeOutExpo');
+                                            $('#rescanDev').delay(200).velocity({top: '3vh'}, 800, 'easeOutExpo');
+                                            $('#listDevInstead').delay(400).velocity({top: '13vh'}, 800, 'easeOutExpo');
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    });
+                });
+                $('#rescanDev').on('touchend', function()  {
+                    $('#listDevInstead').velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#rescanDev').delay(200).velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#moreOptionsPlatform').delay(400).velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#scannedList').delay(400).velocity({height: '85%'}, 800, 'easeInExpo');
+                    $('#logo0').delay(1000).velocity({scale: 1}, 800, 'easeInOutExpo');
+                    $('#logo').delay(1000).velocity({height: '100%'}, 800, 'easeInOutExpo', function()  {
+                        $('#scannedList').css({top: '150vh'});
+                        $('#logo').css({boxShadow: '0 0 0 rgba(0, 140, 255, 0)'});
+                        $('#rescanDev').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                        $('#logo').delay(400).velocity({height: '90%'}, 800, 'easeOutExpo');
+                        $('#logo0').delay(400).velocity({scale: 0.9}, 800, 'easeOutExpo');
+                        $('#scanLoader').delay(600).velocity({top: '90%'}, 800, 'easeOutExpo', function()  {
+                            scanForDev(function()  {
+                                $('#scanLoader').velocity({top: '150%'}, 800, 'easeOutExpo');
+                                $('#logo0').delay(200).velocity({scale: 1}, 800, 'easeOutExpo');
+                                $('#logo').delay(200).velocity({height: '100%'}, 800, 'easeOutExpo', function()  {
+                                    if(scannedDev.length == 0)  {
+                                        toastLong('No devices discovered in the scan.');
+                                        $('#logo').delay(100).velocity({height: '80%'}, 800, 'easeOutExpo');
+                                        $('#logo0').delay(100).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                                        $('#scanDev').delay(200).velocity({top: '80%'}, 800, 'easeOutExpo');
+                                        $('#listDev').delay(300).velocity({top: '90%'}, 800, 'easeOutExpo');
+                                    }  else  {
+                                        $('#scannedList').html('');
+                                        for(var i = 0; i < scannedDev.length; i++)  {
+                                            tempEl = "<div id='scannedListItem" + i + "' style='width: 80%; height: 6vh; line-height: 6vh; letter-spacing: 1vh; text-align: left; font-size: 2vh; font-family: common; border-radius: 10px; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; left: 10%; top: " + (3 + (i * 10)) + "vh; color: #008cff; overflow: hidden; text-overflow: ellipsis;'>&nbsp;" + scannedDev[i].name + "</div>";
+                                            $('#scannedList').html($('#scannedList').html() + tempEl);
+                                        }
+                                        $('#logo').css({boxShadow: '0 0 3.5vh rgba(0, 140, 255, 0.8)'});
+                                        $('#logo').delay(200).velocity({height: '15%'}, 1400, 'easeOutExpo');
+                                        $('#logo0').delay(200).velocity({scale: 0.3}, 1400, 'easeOutExpo');
+                                        $('#scannedList').delay(200).velocity({top: '15%'}, 1400, 'easeOutExpo', function()  {
+                                            for(var i = 0; i < scannedDev.length; i++)  {
+                                                $('#scannedListItem' + i).on('touchend', function()  {
+                                                    $(this).css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.7)', background: '#008cff', color: 'rgb(0, 0, 0)'});
+                                                    stageOutAndPair('scan', +$(this).attr('id').substr(15));
+                                                });
+                                            }
+                                            $('#scannedList').velocity({height: '62%'}, 800, 'easeOutExpo');
+                                            $('#moreOptionsPlatform').velocity({top: '77%'}, 800, 'easeOutExpo');
+                                            $('#rescanDev').delay(200).velocity({top: '3vh'}, 800, 'easeOutExpo');
+                                            $('#listDevInstead').delay(400).velocity({top: '13vh'}, 800, 'easeOutExpo');
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    });
+                });
+                $('#listDevInstead').on('touchend', function()  {
+                    loadPairedDev(function()  {
+                        if(pairedDev.length != 0)  {
+                            $('#listDevInstead').velocity({top: '150vh'}, 800, 'easeInExpo');
+                            $('#rescanDev').delay(200).velocity({top: '150vh'}, 800, 'easeInExpo');
+                            $('#moreOptionsPlatform').delay(400).velocity({top: '150vh'}, 800, 'easeInExpo');
+                            $('#scannedList').delay(400).velocity({height: '85%'}, 800, 'easeInExpo');
+                            $('#logo0').delay(1000).velocity({scale: 1}, 800, 'easeInOutExpo');
+                            $('#logo').delay(1000).velocity({height: '100%'}, 800, 'easeInOutExpo', function()  {
+                                $('#scannedList').css({top: '150vh'});
+                                $('#listDevInstead').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                                $('#pairedList').html('');
+                                for(var i = 0; i < pairedDev.length; i++)  {
+                                    tempEl = "<div id='pairedListItem" + i + "' style='width: 80%; height: 6vh; line-height: 6vh; letter-spacing: 1vh; text-align: left; font-size: 2vh; font-family: common; border-radius: 10px; box-shadow: 0 0 1vh rgba(0, 140, 255, 0.7); border: 1px solid #008cff; left: 10%; top: " + (3 + (i * 10)) + "vh; color: #008cff; overflow: hidden; text-overflow: ellipsis;'>&nbsp;" + pairedDev[i].name + "</div>";
+                                    $('#pairedList').html($('#pairedList').html() + tempEl);
+                                }
+                                $('#logo').css({boxShadow: '0 0 3.5vh rgba(0, 140, 255, 0.8)'});
+                                $('#logo').delay(200).velocity({height: '15%'}, 1400, 'easeOutExpo');
+                                $('#logo0').delay(200).velocity({scale: 0.3}, 1400, 'easeOutExpo');
+                                $('#pairedList').delay(200).velocity({top: '15%'}, 1400, 'easeOutExpo', function()  {
+                                    for(var i = 0; i < pairedDev.length; i++)  {
+                                        $('#pairedListItem' + i).on('touchend', function()  {
+                                            $(this).css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.7)', background: '#008cff', color: 'rgb(0, 0, 0)'});
+                                            stageOutAndPair('list', +$(this).attr('id').substr(14));
+                                        });
+                                    }
+                                    $('#pairedList').velocity({height: '72%'}, 800, 'easeOutExpo');
+                                    $('#moreOptionsPlatform').velocity({top: '87%'}, 800, 'easeOutExpo');
+                                    $('#scanDevInstead').delay(200).velocity({top: '3vh'}, 800, 'easeOutExpo');
+                                });
+                            });
+                        }  else  {
+                            toastLong('No paired devices available.');
+                            $('#listDevInstead').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                        }
+                    });
+                });
+            }
+
+            function loadPairedDev(success)  {
+                bluetoothSerial.enable(function()  {
+                    bluetoothSerial.list(function(e)  {
+                        pairedDev = e;
+                        success();
+                    });
+                }, function()  {
+                    toastLong('Failed to enable Bluetooth.\n\nGrant the Bluetooth permission from this app\'s settings for proper function.');
+                    $('#listDev').css({boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)', background: 'transparent', color: '#008cff'});
+                });
+            }
+
+            function scanForDev(success)  {
+                bluetoothSerial.enable(function()  {
+                    bluetoothSerial.discoverUnpaired(function(e)  {
+                        scannedDev = e;
+                        success();
+                    });
+                }, function()  {
+                    toastLong('Failed to enable Bluetooth.\n\nGrant the Bluetooth permission from this app\'s settings for proper function.');
+                    $('#scanLoader').velocity({top: '150%'}, 800, 'easeOutExpo');
+                    $('#logo0').delay(200).velocity({scale: 1}, 800, 'easeOutExpo');
+                    $('#logo').delay(200).velocity({height: '100%'}, 800, 'easeOutExpo', function()  {
+                        $('#logo').delay(100).velocity({height: '80%'}, 800, 'easeOutExpo');
+                        $('#logo0').delay(100).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                        $('#scanDev').delay(200).velocity({top: '80%'}, 800, 'easeOutExpo');
+                        $('#listDev').delay(300).velocity({top: '90%'}, 800, 'easeOutExpo');
+                    });
+                });
+            }
+
+            function stageOutAndPair(ver, devtpw)  { //tpw: to pair with
+
+                var dev;
+                if(ver == 'scan')  {dev = scannedDev[devtpw];}
+                if(ver == 'list')  {dev = pairedDev[devtpw];}
+
+                if(ver == 'scan')  {
+                    $('#listDevInstead').velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#rescanDev').delay(200).velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#moreOptionsPlatform').delay(400).velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#scannedList').delay(400).velocity({height: '85%'}, 800, 'easeInExpo');
+                    $('#logo0').delay(1000).velocity({scale: 1}, 800, 'easeInOutExpo');
+                    $('#logo').delay(1000).velocity({height: '100%'}, 800, 'easeInOutExpo', function()  {
+                        $('#logo').css({boxShadow: '0 0 0 rgba(0, 140, 255, 0)'});
+                        $('#scannedList').html('');
+                        $('#scannedList').css({top: '150%'});
+                        $('#logo').delay(400).velocity({height: '90%'}, 800, 'easeOutExpo');
+                        $('#logo0').delay(400).velocity({scale: 0.9}, 800, 'easeOutExpo');
+                        $('#pairLoader').delay(600).velocity({top: '90%'}, 800, 'easeOutExpo', function()  {
+                            bluetoothSerial.connect(dev.address, allowControl, function()  {
+                                if(!remoteMode)  {
+                                    $('#pairLoader').velocity({top: '150%'}, 600, 'easeInExpo');
+                                    $('#logo0').delay(200).velocity({scale: 1}, 600, 'easeInExpo');
+                                    $('#logo').delay(200).velocity({height: '100%'}, 600, 'easeInExpo', function()  {
+                                        scannedDev = [];
+                                        pairedDev = [];
+                                        toastLong('Connection failed. Make sure the device is turned on and in range.');
+
+                                        $('#logo').delay(1000).velocity({height: '80%'}, 800, 'easeOutExpo');
+                                        $('#logo0').delay(1000).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                                        $('#scanDev').delay(1100).velocity({top: '80%'}, 800, 'easeOutExpo');
+                                        $('#listDev').delay(1200).velocity({top: '90%'}, 800, 'easeOutExpo');
+                                    });
+                                }
+                            });
+                        });
+                    });
+                }
+
+                if(ver == 'list')  {
+                    $('#scanDevInstead').velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#moreOptionsPlatform').delay(200).velocity({top: '150vh'}, 800, 'easeInExpo');
+                    $('#pairedList').delay(200).velocity({height: '85%'}, 800, 'easeInExpo');
+                    $('#logo0').delay(800).velocity({scale: 1}, 800, 'easeInOutExpo');
+                    $('#logo').delay(800).velocity({height: '100%'}, 800, 'easeInOutExpo', function()  {
+                        $('#logo').css({boxShadow: '0 0 0 rgba(0, 140, 255, 0)'});
+                        $('#pairedList').html('');
+                        $('#pairedList').css({top: '150%'});
+                        $('#logo').delay(400).velocity({height: '90%'}, 800, 'easeOutExpo');
+                        $('#logo0').delay(400).velocity({scale: 0.9}, 800, 'easeOutExpo');
+                        $('#pairLoader').delay(600).velocity({top: '90%'}, 800, 'easeOutExpo', function()  {
+                            bluetoothSerial.connect(dev.address, allowControl, function()  {
+                                if(!remoteMode)  {
+                                    $('#pairLoader').velocity({top: '150%'}, 600, 'easeInExpo');
+                                    $('#logo0').delay(200).velocity({scale: 1}, 600, 'easeInExpo');
+                                    $('#logo').delay(200).velocity({height: '100%'}, 600, 'easeInExpo', function()  {
+                                        scannedDev = [];
+                                        pairedDev = [];
+                                        toastLong('Connection failed. Make sure the device is turned on and in range.');
+
+                                        $('#logo').delay(1000).velocity({height: '80%'}, 800, 'easeOutExpo');
+                                        $('#logo0').delay(1000).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                                        $('#scanDev').delay(1100).velocity({top: '80%'}, 800, 'easeOutExpo');
+                                        $('#listDev').delay(1200).velocity({top: '90%'}, 800, 'easeOutExpo');
+                                    });
+                                }
+                            });
+                        });
+                    });
+                }
+            }
+
+            function allowControl()  {
+                $('#pairLoader').velocity({top: '150%'}, 600, 'easeInExpo');
+                $('#logo0').delay(200).velocity({scale: 1}, 600, 'easeInExpo');
+                $('#logo').delay(200).velocity({height: '100%'}, 600, 'easeInExpo', function()  {
+                    $('#logo').css({boxShadow: '0 0 3.5vh rgba(0, 140, 255, 0.8)'});
+                    $('#logo0').delay(200).velocity({scale: 0}, 600, 'easeInExpo');
+                    $('#logo').delay(200).velocity({height: 0, top: '-50%'}, 600, 'easeInExpo', function()  {
+                    	$('#remote').velocity({top: '15%'}, 800, 'easeOutExpo', function()  {
+                            $('#discDev').velocity({top: '5vh'}, 800, 'easeOutExpo');
+                        });
+                        remoteMode = true;
+                    });
+                });
+            }
+
+            function reset()  {
+                remoteMode = false;
+                $('#discDev').velocity({top: '150%'}, 800, 'easeInExpo');
+                $('#logo').css({boxShadow: '0 0 0 rgba(0, 140, 255, 0.8)'});
+                $('#remote').velocity({top: '120%'}, 800, 'easeInExpo', function()  {
+                    $('#discDev').css({background: 'transparent', color: '#008cff', boxShadow: '0 0 1vh rgba(0, 140, 255, 0.7)'});
+                    $('#logo').velocity({height: '100%', top: 0}, 800, 'easeOutExpo');
+                    $('#logo0').velocity({scale: 1}, 800, 'easeOutExpo', function()  {
+                        $('#logo').delay(1000).velocity({height: '80%'}, 800, 'easeOutExpo');
+                        $('#logo0').delay(1000).velocity({scale: 0.8}, 800, 'easeOutExpo');
+                        $('#scanDev').delay(1100).velocity({top: '80%'}, 800, 'easeOutExpo');
+                        $('#listDev').delay(1200).velocity({top: '90%'}, 800, 'easeOutExpo');
+                    });
+                });
+            }
+
+            function sendCode(id)  {
+                var idDict = {
+                    rbPOW: 'POWER',
+                    rbSRC: 'SOURCE',
+                    rbNUP: 'UP',
+                    rbNDN: 'DOWN',
+                    rbNLT: 'LEFT',
+                    rbNRT: 'RIGHT',
+                    rbNOK: 'OK',
+                    rbCHA: 'CH+',
+                    rbCHB: 'CH-',
+                    rbVLA: 'VOL+',
+                    rbVLB: 'VOL-',
+                    rbMNU: 'MENU',
+                    rbBCK: 'BACK',
+                    rbEXT: 'EXIT',
+                    rbPLY: 'PLAY',
+                    rbSTP: 'STOP',
+                    rbPFF: 'FF',
+                    rbPRW: 'REWIND',
+                    rbPNX: 'NEXT',
+                    rbPPR: 'PREVIOUS'
+                }
+
+                bluetoothSerial.write(codeDict[idDict[id]] + '\n');
+            }
+
+            function toastLong(message)  {
+                window.plugins.toast.showWithOptions({
+                    message: message,
+                    duration: 'long',
+                    position: 'bottom'
+                });
+            }
+            function toastShort(message)  {
+                window.plugins.toast.showWithOptions({
+                    message: message,
+                    duration: 'short',
+                    position: 'bottom'
+                });
+            }
+        </script>
+    </body>
+</html>
